@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ale3D Mais Arte — Produtos impressos em 3D</title>
+  <meta name="description" content="Produtos impressos em 3D: decoração, miniaturas, acessórios e peças personalizadas. Peça pelo WhatsApp.">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Kaushan+Script&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <header class="topbar">
+    <a href="#inicio" class="brand">
+      <img src="img/logo-pequeno.png" alt="" class="brand-logo">
+      <strong class="brand-texto">ALE<i>3D</i> <em>mais arte</em></strong>
+    </a>
+    <nav class="menu">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#temas">Temas</a>
+      <a href="#personalizados">Personalizados</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <button class="cart-btn" id="abrirCarrinho" aria-label="Abrir carrinho">
+      🛒 <span id="contadorCarrinho">0</span>
+    </button>
+  </header>
+
+  <!-- Banner com a arte da marca -->
+  <section class="banner" id="inicio">
+    <div class="logo-halo">
+      <img src="img/logo.png" alt="Ale3D Mais Arte" class="banner-logo"
+           onerror="this.style.display='none'; document.getElementById('bannerTexto').style.display='block'">
+    </div>
+    <div id="bannerTexto" class="banner-texto" style="display:none">
+      <h1>ALE<span>3D</span></h1>
+      <p>mais arte</p>
+    </div>
+    <p class="banner-frase">Peças impressas em 3D feitas com carinho. Escolha a sua ou crie a sua ideia com a gente.</p>
+    <div class="banner-botoes">
+      <a href="#catalogo" class="btn btn-primario">Ver produtos</a>
+      <a href="#personalizados" class="btn btn-contorno">Quero uma peça exclusiva</a>
+    </div>
+  </section>
+
+  <main>
+    <!-- Temas -->
+    <section class="secao" id="temas">
+      <h2>Temas</h2>
+      <p class="sub">Clique em um tema para filtrar os produtos.</p>
+      <div class="temas" id="listaTemas"></div>
+    </section>
+
+    <!-- Catálogo -->
+    <section class="secao" id="catalogo">
+      <h2>Catálogo</h2>
+      <div class="filtros">
+        <input type="search" id="busca" placeholder="🔍 Buscar produto, material, cor...">
+        <select id="filtroCategoria"><option value="">Todas as categorias</option></select>
+        <select id="ordenar">
+          <option value="">Ordenar</option>
+          <option value="menor">Menor preço</option>
+          <option value="maior">Maior preço</option>
+          <option value="nome">Nome (A–Z)</option>
+        </select>
+      </div>
+      <div class="chips" id="chipsTema"></div>
+      <p class="resultado" id="resultado"></p>
+      <div class="grade" id="grade"></div>
+    </section>
+
+    <!-- Personalizados -->
+    <section class="secao destaque" id="personalizados">
+      <h2>Peças personalizadas</h2>
+      <p class="sub">Conte sua ideia e a gente faz um orçamento. Você pode mandar uma imagem de referência direto no WhatsApp.</p>
+      <form id="formPersonalizado" class="form">
+        <label>Seu nome
+          <input type="text" id="pNome" required placeholder="Como podemos te chamar?">
+        </label>
+        <label>Descreva a peça que você quer
+          <textarea id="pDescricao" rows="4" required placeholder="Ex.: miniatura do meu cachorro, com 10 cm de altura..."></textarea>
+        </label>
+        <div class="linha">
+          <label>Material desejado
+            <select id="pMaterial">
+              <option>Não sei / sugestão de vocês</option>
+              <option>PLA</option><option>PETG</option><option>ABS</option>
+            </select>
+          </label>
+          <label>Cor desejada
+            <input type="text" id="pCor" placeholder="Ex.: azul e branco">
+          </label>
+        </div>
+        <button class="btn btn-whats" type="submit">💬 Enviar pedido pelo WhatsApp</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="rodape" id="contato">
+    <img src="img/logo-pequeno.png" alt="" class="rodape-logo">
+    <p><strong>Ale3D Mais Arte</strong> — produtos impressos em 3D ♥</p>
+    <p><a id="linkWhats" href="#" target="_blank" rel="noopener">💬 Falar no WhatsApp</a></p>
+    <small>© <span id="ano"></span> Ale3D Mais Arte. Todos os direitos reservados.</small>
+  </footer>
+
+  <!-- Botão flutuante WhatsApp -->
+  <a id="whatsFlutuante" class="whats-fab" href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">💬</a>
+
+  <!-- Modal de produto -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-caixa" role="dialog" aria-modal="true">
+      <button class="fechar" id="fecharModal" aria-label="Fechar">×</button>
+      <div class="modal-corpo" id="modalCorpo"></div>
+    </div>
+  </div>
+
+  <!-- Carrinho -->
+  <aside class="carrinho" id="carrinho" aria-hidden="true">
+    <div class="carrinho-topo">
+      <h3>Seu carrinho</h3>
+      <button class="fechar" id="fecharCarrinho" aria-label="Fechar">×</button>
+    </div>
+    <div class="carrinho-itens" id="carrinhoItens"></div>
+    <div class="carrinho-rodape">
+      <div class="total">Total: <strong id="carrinhoTotal">R$ 0,00</strong></div>
+      <button class="btn btn-whats" id="finalizar">💬 Finalizar pelo WhatsApp</button>
+      <button class="link-limpar" id="limpar">Limpar carrinho</button>
+    </div>
+  </aside>
+  <div class="fundo" id="fundo" hidden></div>
+
+  <script src="produtos.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
